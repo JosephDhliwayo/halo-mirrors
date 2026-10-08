@@ -3,7 +3,7 @@
 // Add the business WhatsApp number here (international format, digits only,
 // e.g. "263771234567") so quote buttons open a chat with the message filled in.
 // While it is empty, the message is copied and the WhatsApp catalogue opens.
-const WHATSAPP_NUMBER = "";
+const WHATSAPP_NUMBER = "263713219903";
 const CATALOGUE_URL = "https://wa.me/c/159781977370794";
 
 const $ = (id) => document.getElementById(id);
