@@ -130,3 +130,68 @@ $("copy-plan").addEventListener("click", async () => {
 updatePlanner();
 
 $("year").textContent = new Date().getFullYear();
+
+// ---------- Animations ----------
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Scroll reveal: elements fade up as they enter the screen, siblings staggered
+if ("IntersectionObserver" in window && !reduceMotion) {
+  const groups = [
+    ".section-title",
+    ".cards .card",
+    ".uses li",
+    ".banner-inner > *",
+    ".shape-grid .shape",
+    ".steps li",
+    ".planner-form",
+    ".planner-out",
+    ".contact-text > *",
+    ".contact-logo",
+  ];
+  const targets = [];
+  groups.forEach((sel) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      el.classList.add("reveal");
+      el.style.setProperty("--d", `${Math.min(i, 8) * 0.1}s`);
+      targets.push(el);
+    });
+  });
+  document.documentElement.classList.add("js-reveal");
+  const revealer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("in");
+        revealer.unobserve(e.target);
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+  );
+  targets.forEach((el) => revealer.observe(el));
+} else {
+  document.querySelectorAll(".section-title").forEach((el) => el.classList.add("in"));
+}
+
+// Nav shadow and back-to-top button on scroll
+const toTop = $("to-top");
+const onScroll = () => {
+  const y = window.scrollY;
+  nav.classList.toggle("scrolled", y > 160);
+  toTop.classList.toggle("show", y > 600);
+};
+window.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }));
+
+// Hero mirrors drift slightly with the mouse
+const scene = document.querySelector(".hero-scene");
+if (scene && !reduceMotion && window.matchMedia("(pointer: fine)").matches) {
+  const hero = document.querySelector(".hero");
+  hero.addEventListener("mousemove", (e) => {
+    const r = hero.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    scene.style.transform = `translate(${x * -14}px, ${y * -10}px)`;
+  });
+  hero.addEventListener("mouseleave", () => (scene.style.transform = ""));
+}
