@@ -47,7 +47,7 @@ p { margin: 0; }
 .header { background: var(--white); }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 14px; }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-.logo img { width: 76px; height: 76px; object-fit: contain; }
+.logo img { width: 71px; height: 76px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(47, 33, 26, .25)); }
 .logo-text { display: flex; flex-direction: column; line-height: 1; }
 .logo-text b { font-family: var(--display); font-size: 2.2rem; font-weight: 700; color: var(--espresso); letter-spacing: .08em; }
 .logo-text small { font-size: .78rem; font-weight: 700; letter-spacing: .42em; color: var(--orange); margin-top: 4px; }
@@ -198,8 +198,9 @@ legend, .field > span { font-size: .72rem; font-weight: 700; letter-spacing: .12
 .contact h2 { font-family: var(--display); font-weight: 600; font-size: clamp(2.2rem, 4.4vw, 3.1rem); margin-top: 6px; }
 .address { font-family: var(--display); font-style: italic; font-weight: 600; font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--orange-light); margin-block: 18px 12px !important; line-height: 1.3; }
 .contact-text > p:not(.address):not(.banner-kicker) { color: #cdbcae; }
-.contact-logo { justify-self: end; background: var(--cream); padding: 16px; border-radius: 50%; border: 4px solid var(--orange); max-width: 320px; }
-.contact-logo img { border-radius: 50%; }
+.contact-logo { position: relative; justify-self: end; max-width: 360px; width: 100%; }
+.contact-logo::before { content: ""; position: absolute; inset: 8%; border-radius: 50%; background: radial-gradient(circle, rgba(232, 102, 15, .35), transparent 70%); filter: blur(30px); z-index: 0; }
+.contact-logo img { position: relative; z-index: 1; width: 100%; height: auto; filter: drop-shadow(0 24px 30px rgba(0, 0, 0, .55)); }
 
 /* Footer */
 .footer { background: var(--espresso-deep); color: #a8968a; font-size: .85rem; border-top: 3px solid var(--orange); }
@@ -238,7 +239,7 @@ legend, .field > span { font-size: .72rem; font-weight: 700; letter-spacing: .12
 @media (max-width: 560px) {
   .topbar-right { display: none; }
   .topbar-left { clip-path: none; margin-left: -20px; width: calc(100% + 40px); justify-content: center; }
-  .logo img { width: 58px; height: 58px; }
+  .logo img { width: 54px; height: 58px; }
   .logo-text b { font-size: 1.5rem; }
   .hero { min-height: 0; }
   .quote-bar { grid-template-columns: 1fr; }
